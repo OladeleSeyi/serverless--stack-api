@@ -1,6 +1,7 @@
 import * as uuid from "uuid";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
+import validate from "./libs/validate";
 
 export const main = handler(async (event, context) => {
   const data = JSON.parse(event.body);
@@ -23,6 +24,7 @@ export const main = handler(async (event, context) => {
     },
   };
 
+  await validate(params);
   await dynamoDb.put(params);
 
   return params.Item;
